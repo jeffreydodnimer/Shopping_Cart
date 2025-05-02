@@ -1,9 +1,14 @@
 def run(cart):
     name = input("Name to remove: ").strip().lower()
-    try:
-        price = float(input("Price of that line: "))
-        qty = int(input("Quantity to remove: "))
-        cart.remove_item(name, qty, price)
-        print(f"\U0001F5D1️ Removed {qty}× {name} @ ${price:.2f}")
-    except ValueError as e:
-        print(f"⚠️ {e}")
+    quantity = int(input("Quantity to remove: "))
+    price = float(input("Price of item to remove: "))
+
+    for entry in cart.items:
+        if entry['name'] == name and entry['price'] == price:
+            if entry['quantity'] < quantity:
+                raise ValueError(f"Not enough {name} @ {price}")
+            entry['quantity'] -= quantity
+            if entry['quantity'] == 0:
+                cart.items.remove(entry)
+            return
+    raise ValueError(f"No matching {name} @ {price} in cart.")
