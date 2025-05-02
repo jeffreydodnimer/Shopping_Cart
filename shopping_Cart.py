@@ -7,7 +7,11 @@ class ShoppingCart:
             if item['name'] == name and item['price'] == price:
                 item['quantity'] += quantity
                 return
-        self.items.append({'name': name, 'quantity': quantity, 'price': price})
+        self.items.append({
+            'name': name,
+            'quantity': quantity,
+            'price': price
+        })
 
     def remove_item(self, name, quantity, price):
         for item in self.items:
@@ -26,14 +30,19 @@ class ShoppingCart:
         total = 0.0
         for payment in payment_items:
             for item in self.items:
-                if item['name'] == payment['name'] and item['price'] == payment['price']:
+                if (item['name'] == payment['name'] and
+                        item['price'] == payment['price']):
                     if payment['quantity'] > item['quantity']:
-                        raise ValueError(f"Not enough quantity of '{item['name']}' in cart.")
+                        raise ValueError(
+                            f"Not enough quantity of '{item['name']}' in cart."
+                        )
                     item['quantity'] -= payment['quantity']
                     total += payment['quantity'] * payment['price']
                     if item['quantity'] == 0:
                         self.items.remove(item)
                     break
             else:
-                raise ValueError(f"Item '{payment['name']}' not found in cart.")
+                raise ValueError(
+                    f"Item '{payment['name']}' not found in cart."
+                )
         return total
