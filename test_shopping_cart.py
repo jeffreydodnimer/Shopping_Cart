@@ -1,7 +1,7 @@
-import unittest
+import pytest
 from shopping_cart import ShoppingCart
 
-class TestShoppingCart(unittest.TestCase):
+class TestShoppingCart(pytest.TestCase):
 
     def setUp(self):
         self.cart = ShoppingCart()
@@ -54,4 +54,4 @@ class TestShoppingCart(unittest.TestCase):
             self.cart.pay_items({"water": 2})
 
 if __name__ == '__main__':
-    unittest.main()
+    pytest.main()
