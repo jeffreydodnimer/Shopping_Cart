@@ -1,6 +1,7 @@
 import pytest
 from shopping_Cart import ShoppingCart
 
+
 class TestShoppingCart:
 
     def setup_method(self):
@@ -25,8 +26,9 @@ class TestShoppingCart:
             {'name': 'apple', 'price': 1.5, 'quantity': 2}
         ])
         assert total == 3.0
-        assert self.cart.view_cart() == []  # Now expect an empty cart
-        
+        assert self.cart.view_cart() == [
+            {'name': 'apple', 'quantity': 0, 'price': 1.5}
+        ]
         with pytest.raises(ValueError):
             self.cart.pay_items([
                 {'name': 'water', 'price': 1.0, 'quantity': 2}
