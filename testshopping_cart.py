@@ -1,6 +1,7 @@
 import pytest
 from shopping_cart import ShoppingCart
 
+
 class TestShoppingCart:
 
     def setup_method(self):
@@ -26,6 +27,7 @@ class TestShoppingCart:
         assert self.cart.view_cart() == []
 
     def test_remove_item_not_found(self):
+        # Fixed escape sequence for match string
         with pytest.raises(ValueError, match="No matching item\\+price in cart."):
             self.cart.remove_item("eggs", 1, 1.0)
 
@@ -62,9 +64,12 @@ class TestShoppingCart:
         assert self.cart.view_cart() == [{'name': 'chips', 'quantity': 3, 'price': 2.0}]
 
     def test_update_item_not_found(self):
+        # Fixed escape sequence for match string
         with pytest.raises(ValueError, match="No matching item\\+price to rename."):
             self.cart.update_item_name("cookie", 1.0, "biscuit")
+        # Fixed escape sequence for match string
         with pytest.raises(ValueError, match="No matching item\\+price to change quantity."):
             self.cart.update_item_quantity("cookie", 1.0, 5)
+        # Fixed escape sequence for match string
         with pytest.raises(ValueError, match="No matching item\\+price to change price."):
             self.cart.update_item_price("cookie", 1.0, 2.0)

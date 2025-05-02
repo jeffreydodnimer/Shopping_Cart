@@ -17,7 +17,7 @@ class ViewCart:
                 elif item['quantity'] == quantity:
                     self.cart.remove(item)
                 return
-        raise ValueError(f"No matching item+price in cart.")
+        raise ValueError("No matching item+price in cart.")
 
     def view_cart(self):
         return self.cart
