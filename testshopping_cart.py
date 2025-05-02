@@ -1,5 +1,5 @@
 import pytest
-from Shopping_Cart import ShoppingCart
+from shoppingCart import ShoppingCart
 
 
 class TestShoppingCart:

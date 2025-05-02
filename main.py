@@ -1,4 +1,4 @@
-from Shopping_Cart import ShoppingCart
+from shoppingCart import ShoppingCart
 import add_item
 import remove_item
 import view_cart
