@@ -12,34 +12,28 @@ class ShoppingCart:
     def remove_item(self, name, quantity, price):
         for item in self.items:
             if item['name'] == name and item['price'] == price:
-                if item['quantity'] < quantity:
-                    raise ValueError(f"Not enough {name} @ {price}")
-                item['quantity'] -= quantity
-                if item['quantity'] == 0:
+                if quantity >= item['quantity']:
                     self.items.remove(item)
+                else:
+                    item['quantity'] -= quantity
                 return
-        raise ValueError(f"No matching {name} @ {price}")
-
-    def update_item_name(self, name, price, new_name):
-        for item in self.items:
-            if item['name'] == name and item['price'] == price:
-                item['name'] = new_name
-                return
-        raise ValueError(f"No matching {name} @ {price} to rename.")
-
-    def update_item_quantity(self, name, price, new_quantity):
-        for item in self.items:
-            if item['name'] == name and item['price'] == price:
-                item['quantity'] = new_quantity
-                return
-        raise ValueError(f"No matching {name} @ {price} to change quantity.")
-
-    def update_item_price(self, name, price, new_price):
-        for item in self.items:
-            if item['name'] == name and item['price'] == price:
-                item['price'] = new_price
-                return
-        raise ValueError(f"No matching {name} @ {price} to change price.")
+        raise ValueError(f"Item '{name}' not found in cart.")
 
     def view_cart(self):
         return self.items
+
+    def pay_items(self, payment_items):
+        total = 0.0
+        for payment in payment_items:
+            for item in self.items:
+                if item['name'] == payment['name'] and item['price'] == payment['price']:
+                    if payment['quantity'] > item['quantity']:
+                        raise ValueError(f"Not enough quantity of '{item['name']}' in cart.")
+                    item['quantity'] -= payment['quantity']
+                    total += payment['quantity'] * payment['price']
+                    if item['quantity'] == 0:
+                        self.items.remove(item)
+                    break
+            else:
+                raise ValueError(f"Item '{payment['name']}' not found in cart.")
+        return total
