@@ -1,12 +1,15 @@
 def run(cart):
     items = cart.view_cart()
     if not items:
-        print("🧺 Nothing to pay.")
+        print("\U0001F9FA Nothing to pay.")
         return
 
-    print("🧾 Cart items:")
+    print("\U0001F9FE Cart items:")
     for e in items:
-        print(f"  {e['name'].title()} — {e['quantity']}× @ ${e['price']:.2f} = ${e['quantity'] * e['price']:.2f}")
+        line_total = e['quantity'] * e['price']
+        print(
+            f"  {e['name'].title()} — {e['quantity']}× @ ${e['price']:.2f} = ${line_total:.2f}"
+        )
 
     to_pay = []
     while True:
@@ -22,6 +25,6 @@ def run(cart):
 
     try:
         total = cart.pay_items(to_pay)
-        print(f"💰 Paid total: ${total:.2f}")
+        print(f"\U0001F4B0 Paid total: ${total:.2f}")
     except ValueError as e:
         print(f"⚠️ {e}")

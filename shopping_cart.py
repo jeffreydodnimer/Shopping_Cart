@@ -13,7 +13,6 @@ class ShoppingCart:
         for i, entry in enumerate(self.items):
             if entry['name'] == name and entry['price'] == price:
                 if quantity >= entry['quantity']:
-                    # remove the whole line
                     self.items.pop(i)
                 else:
                     entry['quantity'] -= quantity
@@ -24,21 +23,16 @@ class ShoppingCart:
         return [dict(e) for e in self.items]
 
     def pay_items(self, to_pay):
-        """
-        to_pay: list of dicts [{'name': str, 'price': float, 'quantity': int}, ...]
-        """
         total = 0.0
         for sel in to_pay:
             name = sel['name']
             price = sel['price']
-            qty   = sel['quantity']
-            # find the line
+            qty = sel['quantity']
             for i, entry in enumerate(self.items):
                 if entry['name'] == name and entry['price'] == price:
                     if qty > entry['quantity']:
                         raise ValueError(f"Not enough {name} @ {price}")
                     total += qty * price
-                    # remove or decrement
                     if qty == entry['quantity']:
                         self.items.pop(i)
                     else:
@@ -71,6 +65,10 @@ class ShoppingCart:
                     if other['name'] == name and other['price'] == new_price:
                         other['quantity'] += qty
                         return
-                self.items.append({'name': name, 'quantity': qty, 'price': new_price})
+                self.items.append({
+                    'name': name,
+                    'quantity': qty,
+                    'price': new_price
+                })
                 return
         raise ValueError("No matching item+price to change price.")

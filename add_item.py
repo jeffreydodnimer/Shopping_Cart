@@ -1,7 +1,7 @@
 def run(cart):
-    name  = input("Enter item name: ").strip().lower()
+    name = input("Enter item name: ").strip().lower()
     try:
-        qty   = int(input("Enter quantity: "))
+        qty = int(input("Enter quantity: "))
         price = float(input("Enter price per item: "))
         cart.add_item(name, qty, price)
         print(f"✅ Added {qty}× {name} @ ${price:.2f}")
