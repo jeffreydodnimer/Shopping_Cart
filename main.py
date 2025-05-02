@@ -5,9 +5,11 @@ import view_cart
 import update_item
 import pay_items
 
+
+
 def main():
     cart = ShoppingCart()
-    print("🛒 Welcome to CLI Shopping Cart")
+    print("\U0001F6D2 Welcome to CLI Shopping Cart")
 
     actions = {
         '1': add_item.run,
@@ -28,14 +30,15 @@ def main():
 
         choice = input("Choose (1-6): ").strip()
         if choice == '5':
-            print("👋 Goodbye!")
+            print("\U0001F44B Goodbye!")
             break
 
         action = actions.get(choice)
         if action:
             action(cart)
         else:
-            print("⚠️ Invalid option. Choose 1–6.")
+            print("\u26A0\uFE0F Invalid option. Choose 1–6.")
+
 
 if __name__ == '__main__':
     main()
