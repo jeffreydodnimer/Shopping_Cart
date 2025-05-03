@@ -15,7 +15,7 @@ def main():
         '2': remove_item.run,
         '3': view_cart.run,
         '4': pay_items.run,
-        '6': update_item.run,
+        '5': update_item.run,
     }
 
     while True:
@@ -24,12 +24,12 @@ def main():
         print("2. Remove item")
         print("3. View cart")
         print("4. Pay")
-        print("5. Exit")
-        print("6. Update item")
+        print("5. Update item")
+        print("6. Exit")
 
         choice = input("Choose (1-6): ").strip()
-        if choice == '5':
-            print("👋 Goodbye!")
+        if choice == '6':
+            print("Thank you for coming!!")
             break
 
         action = actions.get(choice)
