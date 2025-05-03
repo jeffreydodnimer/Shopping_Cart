@@ -1,33 +1,28 @@
 def run(cart):
     if not cart.items:
-        print("🛒 Your cart is empty.")
-        return
+        return print("🛒 Your cart is empty.")
 
-    print("\n💳 Pay for Items\nItems in your cart:")
+    print("\n💳 Pay for Items")
     for i, item in enumerate(cart.items, 1):
         print(f"{i}. {item['name'].title()} | Qty: {item['quantity']} | Price: P{item['price']:.2f}")
 
     total = 0
     while True:
-        name = input("\nEnter item name to pay for (or 'done' to finish): ").strip().lower()
-        if name == 'done':
-            break
+        name = input("\nItem name to pay (or 'done'): ").strip().lower()
+        if name == 'done': break
         try:
-            price = float(input("Enter item price: "))
-            qty = int(input("Enter quantity to pay for: "))
+            price = float(input("Item price: "))
+            qty = int(input("Quantity: "))
             for item in cart.items:
                 if item['name'] == name and item['price'] == price:
                     if item['quantity'] < qty:
-                        print(f"❌ Not enough quantity for {name}.")
-                        break
+                        print(f"❌ Not enough {name}."); break
                     item['quantity'] -= qty
                     total += qty * price
-                    print(f"✅ Paid for {qty} x {name} @ P{price:.2f}")
+                    print(f"✅ Paid {qty} x {name} @ P{price:.2f}")
                     break
-            else:
-                print(f"❌ Item '{name}' @ P{price:.2f} not found.")
-        except ValueError:
-            print("⚠️ Invalid input.")
+            else: print(f"❌ {name} @ P{price:.2f} not found.")
+        except: print("⚠️ Invalid input.")
 
-    cart.items = [item for item in cart.items if item['quantity'] > 0]
-    print(f"\n💰 Total paid: P{total:.2f}")
+    cart.items = [i for i in cart.items if i['quantity'] > 0]
+    print(f"\n💰 Total: P{total:.2f}")
