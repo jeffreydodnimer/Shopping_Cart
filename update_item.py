@@ -10,6 +10,6 @@ def run(cart):
         cart.update_item_price(new_name, old_price, new_price)
         cart.update_item_quantity(new_name, new_price, new_qty)
 
-        print(f"✅ Updated '{new_name}' to {new_qty} pcs @ P{new_price:.2f}")
+        print(f"✅ Updated '{new_name}' to {new_qty} pcs  P{new_price:.2f}")
     except ValueError as e:
         print(f"❌ {e}")
