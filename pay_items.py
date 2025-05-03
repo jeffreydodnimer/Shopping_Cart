@@ -5,7 +5,8 @@ def run(cart):
 
     print("\n💳 Pay for Items")
     for i, item in enumerate(cart.items, 1):
-        print(f"{i}. {item['name'].title()} | Qty: {item['quantity']} | Price: P{item['price']:.2f}")
+        print(f"{i}. {item['name'].title()} | Qty: {item['quantity']} | Price: "
+              f"P{item['price']:.2f}")
 
     total = 0
     while True:
