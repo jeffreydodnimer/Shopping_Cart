@@ -8,10 +8,10 @@ class TestShoppingCart(unittest.TestCase):
         self.cart = ShoppingCart()
 
     def test_add_and_remove_items(self):
-        self.cart.add_item("apple", 2, 1.5)
-        self.cart.add_item("apple", 3, 1.5)
+        self.cart.add_item("apple", 2, 50)
+        self.cart.add_item("apple", 3, 50)
         self.assertEqual(self.cart.view_cart(), [
-            {'name': 'apple', 'quantity': 5, 'price': 1.5}
+            {'name': 'apple', 'quantity': 5, 'price': 50}
         ])
 
         self.cart.remove_item("apple", 3, 1.5)

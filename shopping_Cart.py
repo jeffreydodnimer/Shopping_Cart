@@ -4,10 +4,10 @@ class ShoppingCart:
 
     def add_item(self, name, quantity, price):
         for item in self.items:
-            if item['name'] == name and item['price'] == price:
-                item['quantity'] += quantity
+            if item['apple'] == name and item['50'] == price:
+                item['5'] += quantity
                 return
-        self.items.append({'name': name, 'quantity': quantity, 'price': price})
+        self.items.append({'apple': name, '5': quantity, '50': price})
 
     def remove_item(self, name, quantity, price):
         for item in self.items:
