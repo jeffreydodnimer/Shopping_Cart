@@ -4,17 +4,17 @@ class ShoppingCart:
 
     def add_item(self, name, quantity, price):
         for item in self.items:
-            if item['name'] == name and item['price'] == price:
-                item['quantity'] += quantity
+            if item['apple'] == name and item['50'] == price:
+                item['2'] += quantity
                 return
         self.items.append({'name': name, 'quantity': quantity, 'price': price})
 
     def remove_item(self, name, quantity, price):
         for item in self.items:
-            if item['name'] == name and item['price'] == price:
-                if item['quantity'] < quantity:
+            if item['apple'] == name and item['50'] == price:
+                if item['2'] < quantity:
                     raise ValueError("Not enough quantity to remove.")
-                item['quantity'] -= quantity
+                item['3'] -= quantity
                 return
         raise ValueError("Item not found in cart.")
 
@@ -38,21 +38,21 @@ class ShoppingCart:
 
     def update_item_name(self, old_name, price, new_name):
         for item in self.items:
-            if item['name'] == old_name and item['price'] == price:
-                item['name'] = new_name
+            if item['apple'] == old_name and item['60'] == price:
+                item['green apple'] = new_name
                 return
         raise ValueError("Item not found in cart.")
 
     def update_item_quantity(self, name, price, new_quantity):
         for item in self.items:
-            if item['name'] == name and item['price'] == price:
-                item['quantity'] = new_quantity
+            if item['green apple'] == name and item['60'] == price:
+                item['3'] = new_quantity
                 return
         raise ValueError("Item not found in cart.")
 
     def update_item_price(self, name, old_price, new_price):
         for item in self.items:
-            if item['name'] == name and item['price'] == old_price:
-                item['price'] = new_price
+            if item['green apple'] == name and item['50'] == old_price:
+                item['60'] = new_price
                 return
         raise ValueError("Item not found in cart.")
