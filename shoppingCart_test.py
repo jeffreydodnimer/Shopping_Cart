@@ -1,58 +1,44 @@
 import unittest
 from shopping_Cart import ShoppingCart
 
-
 class TestShoppingCart(unittest.TestCase):
-
     def setUp(self):
         self.cart = ShoppingCart()
 
-    def test_add_and_remove_items(self):
-        self.cart.add_item("apple", 2, 50)
-        self.cart.add_item("apple", 3, 50)
-        self.assertEqual(self.cart.view_cart(), [
-            {'name': 'apple', 'quantity': 5, 'price': 50}
-        ])
+    def test_add_item(self):
+        self.cart.add_item("Laptop", 1200)
+        self.assertEqual(len(self.cart.check_cart()), 1)
+        self.assertEqual(self.cart.check_cart()[0]['item'], "Laptop")
 
-        self.cart.remove_item("apple", 3, 1.5)
-        self.assertEqual(self.cart.view_cart(), [
-            {'name': 'apple', 'quantity': 2, 'price': 1.5}
-        ])
+    def test_remove_item(self):
+        self.cart.add_item("Laptop", 1200)
+        self.cart.add_item("Mouse", 25)
+        self.cart.remove_item("Laptop")
+        items = self.cart.check_cart()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0]['item'], "Mouse")
 
-        with self.assertRaises(ValueError):
-            self.cart.remove_item("egg", 1, 1.0)
+    def test_check_cart(self):
+        self.cart.add_item("Keyboard", 50)
+        self.cart.add_item("Monitor", 300)
+        items = self.cart.check_cart()
+        self.assertEqual(len(items), 2)
 
-    def test_pay_items(self):
-        self.cart.add_item("apple", 2, 1.5)
-        total = self.cart.pay_items([
-            {'name': 'apple', 'price': 1.5, 'quantity': 2}
-        ])
-        self.assertEqual(total, 3.0)
-        self.assertEqual(self.cart.view_cart(), [
-            {'name': 'apple', 'quantity': 0, 'price': 1.5}
-        ])
+    def test_total_price(self):
+        self.cart.add_item("Chair", 100)
+        self.cart.add_item("Table", 200)
+        self.assertEqual(self.cart.total_price(), 300)
 
-        with self.assertRaises(ValueError):
-            self.cart.pay_items([
-                {'name': 'water', 'price': 1.0, 'quantity': 2}
-            ])
+    def test_pay_success(self):
+        self.cart.add_item("Phone", 800)
+        message = self.cart.pay()
+        self.assertTrue(self.cart.paid)
+        self.assertIn("Payment successful", message)
 
-    def test_update_item(self):
-        self.cart.add_item("apple", 2, 1.5)
-        self.cart.update_item_name("apple", 1.5, "green apple")
-        self.cart.update_item_quantity("green apple", 1.5, 3)
-        self.cart.update_item_price("green apple", 1.5, 2.0)
-        self.assertEqual(self.cart.view_cart(), [
-            {'name': 'green apple', 'quantity': 3, 'price': 2.0}
-        ])
-
-        with self.assertRaises(ValueError):
-            self.cart.update_item_name("cookie", 1.0, "biscuit")
-        with self.assertRaises(ValueError):
-            self.cart.update_item_quantity("cookie", 1.0, 5)
-        with self.assertRaises(ValueError):
-            self.cart.update_item_price("cookie", 1.0, 2.0)
-
+    def test_pay_empty_cart(self):
+        with self.assertRaises(Exception) as context:
+            self.cart.pay()
+        self.assertEqual(str(context.exception), "Cart is empty. Cannot proceed to payment.")
 
 if __name__ == '__main__':
     unittest.main()
