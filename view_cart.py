@@ -8,8 +8,6 @@ def run(cart):
         for e in items:
             line_total = e['quantity'] * e['price']
             grand_total += line_total
-            print(
-                f"  {e['name'].title()} — {e['quantity']}× P{e['price']:.2f} = "
-                f"P{line_total:.2f}"
-            )
+            print(f"  {e['name'].title()} — {e['quantity']}× P{e['price']:.2f}")
+            print(f"    = P{line_total:.2f}")
         print(f"\nGrand total: P{grand_total:.2f}")
