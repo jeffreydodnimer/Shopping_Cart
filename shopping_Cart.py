@@ -56,4 +56,3 @@ class ShoppingCart:
                 item['price'] = new_price
                 return
         raise ValueError("Item not found in cart.")
-    
