@@ -11,7 +11,7 @@ def run(cart):
         for entry in cart.items:
             if entry['name'] == name and entry['price'] == price:
                 if entry['quantity'] < quantity:
-                    print(f"❌ Not enough quantity of {name} at P{price:.2f}.")
+                    print(f"❌ Not enough {name} at P{price:.2f}.")
                     return
                 entry['quantity'] -= quantity
                 if entry['quantity'] == 0:
@@ -19,6 +19,6 @@ def run(cart):
                 print(f"✅ Removed {quantity} x {name} P{price:.2f}")
                 return
 
-        print(f"❌ No matching item '{name}' P{price:.2f} found in cart.")
+        print(f"❌ No matching '{name}' at P{price:.2f} found in cart.")
     except ValueError:
-        print("⚠️ Invalid input. Please enter correct number and price formats.")
+        print("⚠️ Invalid input. Enter correct number and price formats.")
