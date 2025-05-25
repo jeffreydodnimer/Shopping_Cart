@@ -28,7 +28,7 @@ def run(cart):
                     break
             else:
                 print("❌ Item not found.")
-        except:
+        except ValueError:
             print("⚠️ Invalid input.")
 
     cart.items = [i for i in cart.items if i['quantity'] > 0]
