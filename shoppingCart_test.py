@@ -1,27 +1,53 @@
-import unittest
+import pytest
 from shopping_Cart import ShoppingCart
 
 
-class TestCart(unittest.TestCase):
-    def test_cart_actions(self):
-        cart = ShoppingCart()
-        cart.add_item("Book", 10)
-        cart.add_item("Pen", 2)
-        self.assertEqual(len(cart.check_cart()), 2)
+class TestShoppingCart:
 
-        cart.remove_item("Pen")
-        self.assertEqual(len(cart.check_cart()), 1)
+    def setup_method(self):
+        self.cart = ShoppingCart()
 
-        self.assertEqual(cart.total_price(), 10)
+    def test_cart_operations(self):
+        # Add and remove items
+        self.cart.add_item("apple", 2, 1.5)
+        self.cart.add_item("apple", 3, 1.5)
+        assert self.cart.view_cart() == [
+            {'name': 'apple', 'quantity': 2, 'price': 1.5}
+        ]
+        self.cart.remove_item("apple", 3, 1.5)
+        assert self.cart.view_cart() == [
+            {'name': 'apple', 'quantity': 2, 'price': 1.5}
+        ]
+        with pytest.raises(ValueError):
+            self.cart.remove_item("egg", 1, 1.0)
 
-        msg = cart.pay()
-        self.assertTrue(cart.paid)
-        self.assertIn("Paid", msg)
+        # Pay for items
+        total = self.cart.pay_items([
+            {'name': 'apple', 'price': 1.5, 'quantity': 2}
+        ])
+        assert total == 3.0
+        assert self.cart.view_cart() == [
+            {'name': 'apple', 'quantity': 0, 'price': 1.5}
+        ]
+        with pytest.raises(ValueError):
+            self.cart.pay_items([
+                {'name': 'water', 'price': 1.0, 'quantity': 2}
+            ])
 
-    def test_pay_empty(self):
-        with self.assertRaises(Exception):
-            ShoppingCart().pay()
+        # Update item details
+        self.cart.update_item_name("apple", 1.5, "green apple")
+        self.cart.update_item_quantity("green apple", 1.5, 3)
+        self.cart.update_item_price("green apple", 1.5, 2.0)
+        assert self.cart.view_cart() == [
+            {'name': 'green apple', 'quantity': 3, 'price': 2.0}
+        ]
 
-
-if __name__ == '__main__':
-    unittest.main()
+        # Test item not found for updates
+        for method in [
+            self.cart.update_item_name,
+            self.cart.update_item_quantity,
+            self.cart.update_item_price
+        ]:
+            with pytest.raises(ValueError):
+                method("cookie", 1.0, "biscuit")
+                
