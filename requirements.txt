@@ -1,1 +1,7 @@
-pycodestyle
+pytest
+
+pytest-cov
+
+Flake8
+
+tox
