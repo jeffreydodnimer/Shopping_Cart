@@ -1,53 +1,58 @@
-import pytest
-from shopping_Cart import ShoppingCart  # Make sure this path is correct
+import unittest
+from shopping_Cart import ShoppingCart
 
 
-class TestShoppingCart:
+class TestShoppingCart(unittest.TestCase):
 
-    def setup_method(self):
+    def setUp(self):
         self.cart = ShoppingCart()
 
-    def test_cart_operations(self):
-        # Add items
+    def test_add_and_remove_items(self):
         self.cart.add_item("apple", 2, 1.5)
         self.cart.add_item("apple", 3, 1.5)
-        assert self.cart.view_cart() == [
+        self.assertEqual(self.cart.view_cart(), [
             {'name': 'apple', 'quantity': 5, 'price': 1.5}
-        ]
+        ])
 
-        # Remove items
         self.cart.remove_item("apple", 3, 1.5)
-        assert self.cart.view_cart() == [
+        self.assertEqual(self.cart.view_cart(), [
             {'name': 'apple', 'quantity': 2, 'price': 1.5}
-        ]
-        with pytest.raises(ValueError):
+        ])
+
+        with self.assertRaises(ValueError):
             self.cart.remove_item("egg", 1, 1.0)
 
-        # Pay for items
+    def test_pay_items(self):
+        self.cart.add_item("apple", 2, 1.5)
         total = self.cart.pay_items([
             {'name': 'apple', 'price': 1.5, 'quantity': 2}
         ])
-        assert total == 3.0
-        assert self.cart.view_cart() == [
+        self.assertEqual(total, 3.0)
+        self.assertEqual(self.cart.view_cart(), [
             {'name': 'apple', 'quantity': 0, 'price': 1.5}
-        ]
-        with pytest.raises(ValueError):
+        ])
+
+        with self.assertRaises(ValueError):
             self.cart.pay_items([
                 {'name': 'water', 'price': 1.0, 'quantity': 2}
             ])
 
-        # Update item details
+    def test_update_item(self):
+        self.cart.add_item("apple", 2, 1.5)
         self.cart.update_item_name("apple", 1.5, "green apple")
         self.cart.update_item_quantity("green apple", 1.5, 3)
         self.cart.update_item_price("green apple", 1.5, 2.0)
-        assert self.cart.view_cart() == [
+        self.assertEqual(self.cart.view_cart(), [
             {'name': 'green apple', 'quantity': 3, 'price': 2.0}
-        ]
+        ])
 
-        # Test item not found for updates
-        with pytest.raises(ValueError):
+        with self.assertRaises(ValueError):
             self.cart.update_item_name("cookie", 1.0, "biscuit")
-        with pytest.raises(ValueError):
+        with self.assertRaises(ValueError):
             self.cart.update_item_quantity("cookie", 1.0, 5)
-        with pytest.raises(ValueError):
+        with self.assertRaises(ValueError):
             self.cart.update_item_price("cookie", 1.0, 2.0)
+
+
+if __name__ == '__main__':
+    unittest.main()
