@@ -1,13 +1,13 @@
 def run(cart):
     items = cart.view_cart()
     if not items:
-        print("🧺 Your cart is empty.")
+        print("🧺 Cart is empty.")
     else:
-        print("🧾 Cart contents:")
-        grand_total = 0.0
-        for e in items:
-            line_total = e['quantity'] * e['price']
-            grand_total += line_total
-            print(f"  {e['name'].title()} — {e['quantity']}× P{e['price']:.2f}")
-            print(f"    = P{line_total:.2f}")
-        print(f"\nGrand total: P{grand_total:.2f}")
+        print("🧾 Cart:")
+        total = 0
+        for i in items:
+            sub = i['quantity'] * i['price']
+            total += sub
+            print(f"{i['name'].title()} x{i['quantity']} @P{i['price']:.2f}")
+            print(f"  = P{sub:.2f}")
+        print(f"\nTotal: P{total:.2f}")
