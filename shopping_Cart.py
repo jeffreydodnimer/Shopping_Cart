@@ -15,6 +15,8 @@ class ShoppingCart:
                 if item['quantity'] < quantity:
                     raise ValueError("Not enough quantity to remove.")
                 item['quantity'] -= quantity
+                if item['quantity'] == 0:
+                    self.items.remove(item)
                 return
         raise ValueError("Item not found in cart.")
 
@@ -31,6 +33,8 @@ class ShoppingCart:
                         raise ValueError("Not enough quantity to pay for.")
                     item['quantity'] -= payment['quantity']
                     total += payment['price'] * payment['quantity']
+                    if item['quantity'] == 0:
+                        self.items.remove(item)
                     break
             else:
                 raise ValueError("Item not found in cart.")
